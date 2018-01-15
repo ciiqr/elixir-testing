@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
 
     # Provision
     config.vm.provision :salt do |salt|
+        salt.install_args = "stable 2017.7"
         salt.minion_config = "salt/etc/minion.yaml"
         salt.grains_config = "salt/etc/grains.yaml"
         salt.run_highstate = true
