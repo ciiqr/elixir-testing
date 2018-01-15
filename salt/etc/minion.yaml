@@ -1,0 +1,13 @@
+
+# masterless
+file_client: local
+master_type: disable
+
+# roots
+file_roots:
+  base:
+    - /srv/salt/states
+
+pillar_roots:
+  base:
+    - /srv/salt/pillar
