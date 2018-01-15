@@ -31,3 +31,6 @@ elixir.hex:
   cmd.run:
     - name: mix local.hex --force
     - unless: mix hex.info
+    - runas: vagrant
+    - require:
+      - file: elixir.mix
