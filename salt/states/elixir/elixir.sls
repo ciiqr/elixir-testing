@@ -1,10 +1,10 @@
-{% set elixir_version = '1.5.2' %}
+{% set elixir_version = '1.5.3' %}
 {% set elixir_programs = ['iex', 'mix', 'elixir', 'elixirc'] %}
 
 erlang:
   pkgrepo.managed:
     - humanname: deb-erlang
-    - name: deb http://packages.erlang-solutions.com/ubuntu {{ salt['grains.get']('lsb_distrib_codename', '') }} contrib
+    - name: deb http://packages.erlang-solutions.com/ubuntu {{ grains['oscodename'] }} contrib
     - file: /etc/apt/sources.list.d/deb-erlang.list
     - key_url: http://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
   pkg.installed:
@@ -25,3 +25,9 @@ elixir.{{ prog }}:
     - name: /usr/local/bin/{{ prog }}
     - target: /usr/local/src/elixir-{{ elixir_version }}/bin/{{ prog }}
 {% endfor %}
+
+# install hex
+elixir.hex:
+  cmd.run:
+    - name: mix local.hex --force
+    - unless: mix hex.info
