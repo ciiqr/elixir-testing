@@ -1,4 +1,4 @@
-{% set elixir_version = '1.5.3' %}
+{% set elixir_version = '1.5.2' %}
 {% set elixir_programs = ['iex', 'mix', 'elixir', 'elixirc'] %}
 
 erlang:
@@ -34,3 +34,18 @@ elixir.hex:
     - runas: vagrant
     - require:
       - file: elixir.mix
+
+# install rebar
+elixir.rebar:
+  cmd.run:
+    - name: mix local.rebar --force
+    - creates: /home/vagrant/.mix/rebar3 # TODO: this is annoying having to hard code the path, should add a helper for expanduser
+    - runas: vagrant
+    - require:
+      - file: elixir.mix
+
+# allow running on port 80
+erlang.setcap:
+  cmd.run:
+    - name: setcap 'cap_net_bind_service=+ep' /usr/lib/erlang/erts-*/bin/beam.smp
+    - unless: getcap /usr/lib/erlang/erts-*/bin/beam.smp | grep -q 'cap_net_bind_service+ep'

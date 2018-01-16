@@ -4,7 +4,11 @@
 		{
 			"folder_exclude_patterns":
 			[
-				".vagrant"
+				".vagrant",
+				"src/*/assets/node_modules",
+				"src/*/_build",
+				"src/*/deps",
+				"src/*/priv/static",
 			],
 			"path": "."
 		}
